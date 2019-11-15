@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>响应式 之 监听&&代理</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <script>
+        // 测试 Object.defineProperty方法对对象属性的监听
+
+        // vm: 模拟vue实例
+        var vm = {}
+        // data： 模拟vue实例的data属性
+        var data = {
+            name: 'zhangsan',
+            age: 20
+        }
+
+        // 通过循环将data的key 代理的vm对象上，并对代理的各个属性进行监听
+        // 其实监听和代理都是通过Object.property一个函数来实现的
+        for(var k in data) {
+            // 这里使用立即执行函数，主要是为了形成闭包，保存每个属性的值
+           
+            (function(k){
+                Object.defineProperty(vm, k, {
+                    get: function(){
+                        console.log('get', data[k])  // 监听
+                        return data[k]
+                    },
+                    set: function(newVal) {
+                        console.log('set', newVal)  // 监听
+                        data[k] = newVal
+                    }
+                })
+            })(k)
+        }
+
+        // // 也可以使用let 声明k，就不用使用立即执行函数了
+        // for(let k in data) {
+        //     Object.defineProperty(vm, k, {
+        //         get: function(){
+        //             console.log('get', data[k])  // 监听
+        //             return data[k]
+        //         },
+        //         set: function(newVal) {
+        //             console.log('set', newVal)  // 监听
+        //             data[k] = newVal
+        //         }
+        //     })
+        // }
+       
+    </script>
+</body>
+</html>
