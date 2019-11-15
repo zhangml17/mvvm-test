@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>to-do-list by vue</title>
+</head>
+<body>
+
+    <div id="app">
+        <div>
+            <input type="text" v-model="title" id="text-title" />
+            <button id="btn" @click="add">submit</button>
+        </div>
+        <div>
+            <ul>
+                <li v-for="item in ulList">{{ item }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                title: '',
+                ulList: []
+            },
+            methods: {
+                add() {
+                    this.ulList.push(this.title)
+                    this.title = ''
+                }
+            }
+        })
+    </script>
+</body>
+</html>
